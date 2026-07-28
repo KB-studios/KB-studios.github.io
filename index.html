@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KrrishyBoy studios — Games</title>
+  <meta name="description" content="KrrishyBoy studios — portfolio and games list" />
+  <link rel="icon" href="favicon.png">
+  <style>
+    :root{
+      --bg:#05060a; --panel:rgba(255,255,255,0.03);
+      --accent:#00f6ff; --accent-2:#8a2be2; --glass:rgba(255,255,255,0.03);
+      --glass-2:rgba(255,255,255,0.02);
+      --muted:#9aa3b2;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 10% 10%, rgba(66,8,255,0.06), transparent),
+      radial-gradient(900px 400px at 90% 90%, rgba(0,246,255,0.03), transparent),var(--bg);color:#e6f3ff}
+    .wrap{max-width:1100px;margin:28px auto;padding:28px}
+    header{display:flex;align-items:center;gap:16px}
+    .logo{font-weight:800;font-size:26px;letter-spacing:0.6px;color:white;text-shadow:0 0 18px rgba(0,246,255,0.12),0 0 32px rgba(138,43,226,0.06)}
+    .subtitle{color:var(--muted);font-size:13px}
+
+    /* hero */
+    .hero{position:relative;margin-top:18px;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(3,6,12,0.7)}
+    .hero .overlay{position:relative;padding:48px;z-index:2;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.35))}
+    .hero h1{font-size:44px;margin:0 0 6px;line-height:1}
+    .hero p{margin:0;color:var(--muted)}
+    .neon{color:var(--accent);text-shadow:0 0 8px rgba(0,246,255,0.25),0 0 28px rgba(138,43,226,0.08)}
+
+    /* background video */
+    .bg-video{position:absolute;inset:0;z-index:0;object-fit:cover;filter:brightness(0.45) contrast(1.05);}
+    .controls{margin-top:18px;display:flex;gap:12px}
+    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#001; padding:10px 14px;border-radius:8px;font-weight:700;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(10,10,40,0.45)}
+    .btn.secondary{background:transparent;color:var(--accent);border:1px solid rgba(255,255,255,0.06)}
+
+    main{display:grid;grid-template-columns:1fr 320px;gap:22px;margin-top:22px}
+    .panel{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+
+    /* games grid */
+    .games{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+    .card{background:linear-gradient(180deg,var(--glass),transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(4px);transition:transform .18s,box-shadow .18s}
+    .card:hover{transform:translateY(-8px);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,246,255,0.08)}
+    .card h3{margin:0 0 6px;font-size:16px}
+    .card p{margin:0;color:var(--muted);font-size:13px}
+    .tag{display:inline-block;padding:6px 8px;border-radius:999px;font-size:12px;background:rgba(0,0,0,0.25);color:var(--muted);margin-top:10px}
+
+    /* sidebar */
+    .sideh{display:flex;justify-content:space-between;align-items:center}
+    .inprogress{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+    .progress-item{display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:8px;background:var(--glass-2);border:1px solid rgba(255,255,255,0.02)}
+
+    footer{margin-top:30px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* modal */
+    .modal{position:fixed;inset:0;background:rgba(2,4,8,0.84);display:flex;align-items:center;justify-content:center;padding:28px;z-index:60;opacity:0;pointer-events:none;transition:opacity .18s}
+    .modal.open{opacity:1;pointer-events:auto}
+    .modal video{max-width:100%;max-height:88vh;border-radius:10px;box-shadow:0 24px 80px rgba(0,0,0,0.8)}
+    .close-x{position:absolute;top:20px;right:24px;color:var(--muted);background:transparent;border:0;font-size:22px;cursor:pointer}
+
+    /* responsive */
+    @media (max-width:880px){main{grid-template-columns:1fr} .wrap{padding:18px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="logo">KrrishyBoy studios</div>
+        <div class="subtitle">Indie game studio — made with passion</div>
+      </div>
+      <div style="margin-left:auto;color:var(--muted);font-size:13px">Signature: "Made by KrrishyBoy studios"</div>
+    </header>
+
+    <section class="hero panel">
+      <!-- Background video (will be loaded after intro) -->
+      <video class="bg-video" muted loop playsinline preload="auto" data-src="KrrishyBoy studios intro.mp4" aria-hidden="true"></video>
+
+      <div class="overlay">
+        <h1>Welcome to <span class="neon">KrrishyBoy studios</span></h1>
+        <p>Futuristic, dark aesthetic. Games portfolio, demos and work-in-progress tracker.</p>
+
+        <div class="controls">
+          <input id="search" placeholder="Search games..." style="margin-left:auto;padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:#eaf6ff" />
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h2 style="margin:0">Games</h2>
+          <div style="color:var(--muted);font-size:13px">Total: <span id="count">0</span></div>
+        </div>
+
+        <div class="games" id="gamesGrid">
+          <!-- JS will populate cards here -->
+        </div>
+
+      </section>
+
+      <aside class="panel">
+        <div class="sideh">
+          <h3 style="margin:0">In Progress</h3>
+        </div>
+        <div class="inprogress" id="inProgressList">
+          <!-- JS populates -->
+        </div>
+
+      </aside>
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> KrrishyBoy studios — All rights reserved.</div>
+    </footer>
+  </div>
+
+  <!-- Intro overlay: plays once before revealing site -->
+  <div id="introOverlay" style="position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;">
+    <video id="introVideo" src="KrrishyBoy studios intro.mp4" autoplay muted playsinline style="width:100%;height:100%;object-fit:cover;"></video>
+    <button id="skipIntro" style="position:absolute;top:18px;right:18px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.06);color:#eaf6ff;border:1px solid rgba(255,255,255,0.06);cursor:pointer;">Skip</button>
+  </div>
+
+  <script>
+    // Editable data: replace placeholders with your own game URLs, thumbnails, and descriptions.
+    const games = [
+      {title:'Riel runner', desc:'Arcade', href:'https://riel-runner.github.io', tags:['Arcade'], thumb:''},
+      {title:'Riel runner online', desc:'Arcade, multiplayer', href:'https://riel-runner.github.io/Riel-runner-online/', tags:['Arcade','Multiplayer'], thumb:''}
+    ];
+    const inProgress = [
+      {title:'Project TD', progress:'Tower defense'}
+    ];
+
+    const grid = document.getElementById('gamesGrid');
+    const count = document.getElementById('count');
+    const ipList = document.getElementById('inProgressList');
+
+    function renderGames(filter=''){
+      grid.innerHTML='';
+      const f = filter.trim().toLowerCase();
+      let shown=0;
+      games.forEach(g=>{
+        if(f && !(g.title+g.desc+(g.tags||[]).join(' ')).toLowerCase().includes(f)) return;
+        shown++;
+        const el = document.createElement('article'); el.className='card';
+        el.innerHTML = `<h3>${escapeHtml(g.title)}</h3><p>${escapeHtml(g.desc)}</p><div class="tag">${(g.tags||[]).slice(0,2).join(' • ')}</div><div style="margin-top:10px"><a class="btn secondary" href="${g.href}" target="_blank">Open</a></div>`;
+        grid.appendChild(el);
+      });
+      count.textContent = shown;
+      if(shown===0) grid.innerHTML='<div style="color:var(--muted);padding:18px">No games match your search.</div>';
+    }
+
+    function renderProgress(){
+      ipList.innerHTML='';
+      inProgress.forEach(p=>{
+        const d = document.createElement('div'); d.className='progress-item';
+        d.innerHTML=`<div style="font-weight:700">${escapeHtml(p.title)}</div><div style="color:var(--muted)">${escapeHtml(p.progress)}</div>`;
+        ipList.appendChild(d);
+      });
+    }
+
+    function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+    // wire up search
+    document.getElementById('search').addEventListener('input', (e)=> renderGames(e.target.value));
+    // intro overlay: play intro video, then reveal site
+    const introOverlay = document.getElementById('introOverlay');
+    const introVideo = document.getElementById('introVideo');
+    const bgVideo = document.querySelector('.bg-video');
+    function revealSite(){
+      if(!introOverlay) return;
+      introOverlay.style.transition = 'opacity 400ms ease';
+      introOverlay.style.opacity = '0';
+      setTimeout(()=>{ introOverlay.parentNode && introOverlay.parentNode.removeChild(introOverlay); }, 500);
+      // load background video after intro to avoid duplicate playback during intro
+      if(bgVideo && bgVideo.dataset && bgVideo.dataset.src){
+        bgVideo.src = bgVideo.dataset.src;
+        bgVideo.play().catch(()=>{});
+      }
+    }
+    introVideo.addEventListener('ended', ()=> revealSite());
+    document.getElementById('skipIntro').addEventListener('click', ()=>{ introVideo.pause(); revealSite(); });
+
+    // initial render
+    renderGames(); renderProgress(); document.getElementById('year').textContent = new Date().getFullYear();
+
+    // helpful note in console
+    console.log('KrrishyBoy studios site loaded. Edit the "games" and "inProgress" arrays in the HTML to change content.');
+  </script>
+</body>
+</html>
