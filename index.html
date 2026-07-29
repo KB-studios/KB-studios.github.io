@@ -43,6 +43,7 @@
     .card:hover{transform:translateY(-8px);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,246,255,0.08)}
     .card h3{margin:0 0 6px;font-size:16px}
     .card p{margin:0;color:var(--muted);font-size:13px}
+    .card .thumb img{width:100%;aspect-ratio:1/1;object-fit:contain;border-radius:8px;margin-bottom:10px;background:rgba(0,0,0,0.06);padding:8px;}
     .tag{display:inline-block;padding:6px 8px;border-radius:999px;font-size:12px;background:rgba(0,0,0,0.25);color:var(--muted);margin-top:10px}
 
     /* sidebar */
@@ -124,8 +125,8 @@
   <script>
     // Editable data: replace placeholders with your own game URLs, thumbnails, and descriptions.
     const games = [
-      {title:'Riel runner', desc:'Riel Runner is a local single-player HTML/JS arcade action game with pixel-art visuals, 100 progressively harder levels, and 10 boss encounters. Players run through corridors, shoot enemies, collect riels, and upgrade between levels in a simple shop system — no online services required. Fast-paced, nostalgic controls and short levels make it great for quick play sessions.', href:'https://riel-runner.github.io', tags:['Arcade'], thumb:''},
-      {title:'Riel runner online(Beta)', desc:'Riel Runner Online (beta) turns the arcade into lightweight realtime co-op: players create or join a room with a short code and play synchronized sessions together while sharing level/shop state. It uses Firebase Realtime Database with anonymous auth to sync presence and inputs (no usernames or chat to avoid privacy issues). The prototype favors responsiveness via client-side prediction and simple sync so matches start quickly with minimal friction.', href:'https://riel-runner.github.io/Riel-runner-online/', tags:['Arcade','Multiplayer'], thumb:''}
+      {title:'Riel runner', desc:'Riel Runner is a local single-player HTML/JS arcade action game with pixel-art visuals, 100 progressively harder levels, and 10 boss encounters. Players run through corridors, shoot enemies, collect riels, and upgrade between levels in a simple shop system — no online services required. Fast-paced, nostalgic controls and short levels make it great for quick play sessions.', href:'https://riel-runner.github.io', tags:['Arcade'], thumb:'Riel runner ThumbThack.png'},
+      {title:'Riel runner online(Beta)', desc:'Riel Runner Online (beta) turns the arcade into lightweight realtime co-op: players create or join a room with a short code and play synchronized sessions together while sharing level/shop state. It uses Firebase Realtime Database with anonymous auth to sync presence and inputs (no usernames or chat to avoid privacy issues). The prototype favors responsiveness via client-side prediction and simple sync so matches start quickly with minimal friction.', href:'https://riel-runner.github.io/Riel-runner-online/', tags:['Arcade','Multiplayer'], thumb:'Riel runner ThumbThack.png'}
     ];
     const inProgress = [
       {title:'Project TD', progress:'Tower defense'},
@@ -144,7 +145,8 @@
         if(f && !(g.title+g.desc+(g.tags||[]).join(' ')).toLowerCase().includes(f)) return;
         shown++;
         const el = document.createElement('article'); el.className='card';
-        el.innerHTML = `<h3>${escapeHtml(g.title)}</h3><p>${escapeHtml(g.desc)}</p><div class="tag">${(g.tags||[]).slice(0,2).join(' • ')}</div><div style="margin-top:10px"><a class="btn secondary" href="${g.href}" target="_blank">Open</a></div>`;
+        const thumbHtml = g.thumb ? `<div class="thumb"><img src="${g.thumb}" alt="${escapeHtml(g.title)} thumbnail"/></div>` : '';
+        el.innerHTML = `${thumbHtml}<h3>${escapeHtml(g.title)}</h3><p>${escapeHtml(g.desc)}</p><div class="tag">${(g.tags||[]).slice(0,2).join(' • ')}</div><div style="margin-top:10px"><a class="btn secondary" href="${g.href}" target="_blank">Open</a></div>`;
         grid.appendChild(el);
       });
       count.textContent = shown;
