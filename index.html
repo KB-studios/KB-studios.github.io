@@ -38,13 +38,23 @@
     .panel{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
 
     /* games grid */
-    .games{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
-    .card{background:linear-gradient(180deg,var(--glass),transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(4px);transition:transform .18s,box-shadow .18s}
+        /* wider tiles: fewer columns per row so cards are wider (use auto-fit for responsive wrapping) */
+    .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(480px,1fr));gap:18px}
+        .card{display:flex;gap:12px;align-items:stretch;background:linear-gradient(180deg,var(--glass),transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(4px);transition:transform .18s,box-shadow .18s}
     .card:hover{transform:translateY(-8px);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,246,255,0.08)}
-    .card h3{margin:0 0 6px;font-size:16px}
-    .card p{margin:0;color:var(--muted);font-size:13px}
-    .card .thumb img{width:100%;aspect-ratio:1/1;object-fit:contain;border-radius:8px;margin-bottom:10px;background:rgba(0,0,0,0.06);padding:8px;}
+        .card h3{margin:0 0 6px;font-size:18px}
+        .card p{margin:0;color:var(--muted);font-size:13px;flex:1}
+        .card .thumb{flex:0 0 96px;margin-right:12px}
+        .card .thumb img{width:96px;height:96px;object-fit:contain;border-radius:8px;background:rgba(0,0,0,0.06);padding:8px;}
     .tag{display:inline-block;padding:6px 8px;border-radius:999px;font-size:12px;background:rgba(0,0,0,0.25);color:var(--muted);margin-top:10px}
+
+        /* responsive: stack cards on narrow screens */
+        @media (max-width:880px){
+          .games{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));}
+          .card{flex-direction:column;align-items:stretch}
+          .card .thumb{margin-right:0;margin-bottom:10px;flex:0 0 auto}
+          .card .thumb img{width:100%;height:140px;max-width:100%}
+        }
 
     /* sidebar */
     .sideh{display:flex;justify-content:space-between;align-items:center}
@@ -146,7 +156,7 @@
         shown++;
         const el = document.createElement('article'); el.className='card';
         const thumbHtml = g.thumb ? `<div class="thumb"><img src="${g.thumb}" alt="${escapeHtml(g.title)} thumbnail"/></div>` : '';
-        el.innerHTML = `${thumbHtml}<h3>${escapeHtml(g.title)}</h3><p>${escapeHtml(g.desc)}</p><div class="tag">${(g.tags||[]).slice(0,2).join(' • ')}</div><div style="margin-top:10px"><a class="btn secondary" href="${g.href}" target="_blank">Open</a></div>`;
+        el.innerHTML = `${thumbHtml}<div class="content"><h3>${escapeHtml(g.title)}</h3><p>${escapeHtml(g.desc)}</p><div class="card-footer" style="margin-top:auto;display:flex;justify-content:space-between;align-items:center"><div class="tag">${(g.tags||[]).slice(0,2).join(' • ')}</div><a class="btn secondary" href="${g.href}" target="_blank">Open</a></div></div>`;
         grid.appendChild(el);
       });
       count.textContent = shown;
