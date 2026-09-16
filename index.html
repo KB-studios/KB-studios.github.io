@@ -2,205 +2,350 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>KrrishyBoy studios — Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KrrishyBoy Studios — Games</title>
   <meta name="description" content="KrrishyBoy studios — portfolio and games list" />
-  <link rel="icon" href="favicon.png">
-  <style>
-    :root{
-      --bg:#05060a; --panel:rgba(255,255,255,0.03);
-      --accent:#00f6ff; --accent-2:#8a2be2; --glass:rgba(255,255,255,0.03);
-      --glass-2:rgba(255,255,255,0.02);
-      --muted:#9aa3b2;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  
+  <!-- Tailwind CSS for rapid, modern styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Enable class-based dark mode for Tailwind
+    tailwind.config = {
+      darkMode: 'class',
     }
-    html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 10% 10%, rgba(66,8,255,0.06), transparent),
-      radial-gradient(900px 400px at 90% 90%, rgba(0,246,255,0.03), transparent),var(--bg);color:#e6f3ff}
-    .wrap{max-width:1100px;margin:28px auto;padding:28px}
-    header{display:flex;align-items:center;gap:16px}
-    .logo{font-weight:800;font-size:26px;letter-spacing:0.6px;color:white;text-shadow:0 0 18px rgba(0,246,255,0.12),0 0 32px rgba(138,43,226,0.06)}
-    .subtitle{color:var(--muted);font-size:13px}
+  </script>
+  
+  <!-- Google Fonts: Poppins for a friendly, modern, and playful look -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
 
-    /* hero */
-    .hero{position:relative;margin-top:18px;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(3,6,12,0.7)}
-    .hero .overlay{position:relative;padding:48px;z-index:2;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.35))}
-    .hero h1{font-size:44px;margin:0 0 6px;line-height:1}
-    .hero p{margin:0;color:var(--muted)}
-    .neon{color:var(--accent);text-shadow:0 0 8px rgba(0,246,255,0.25),0 0 28px rgba(138,43,226,0.08)}
+    /* Custom subtle grid background to give a "design studio" feel */
+    .bg-pattern {
+      background-color: #f8fafc;
+      background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: #334155;
+    }
+    
+    /* Dark mode pattern overrides */
+    .dark .bg-pattern {
+      background-color: #0f172a; 
+      background-image: radial-gradient(#334155 1px, transparent 1px);
+      color: #f8fafc;
+    }
 
-    /* background video */
-    .bg-video{position:absolute;inset:0;z-index:0;object-fit:cover;filter:brightness(0.45) contrast(1.05);}
-    .controls{margin-top:18px;display:flex;gap:12px}
-    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#001; padding:10px 14px;border-radius:8px;font-weight:700;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(10,10,40,0.45)}
-    .btn.secondary{background:transparent;color:var(--accent);border:1px solid rgba(255,255,255,0.06)}
+    /* Bouncy hover effect for game cards */
+    .game-card {
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .game-card:hover {
+      transform: translateY(-5px) scale(1.01);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      border-color: #38bdf8; /* Tailwind Sky 400 */
+    }
 
-    main{display:grid;grid-template-columns:1fr 320px;gap:22px;margin-top:22px}
-    .panel{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-
-    /* games grid */
-        /* wider tiles: fewer columns per row so cards are wider (use auto-fit for responsive wrapping) */
-    .games{display:grid;grid-template-columns:repeat(auto-fit,minmax(480px,1fr));gap:18px}
-        .card{display:flex;gap:12px;align-items:stretch;background:linear-gradient(180deg,var(--glass),transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(4px);transition:transform .18s,box-shadow .18s}
-    .card:hover{transform:translateY(-8px);box-shadow:0 16px 40px rgba(0,0,0,0.6);border-color:rgba(0,246,255,0.08)}
-        .card h3{margin:0 0 6px;font-size:18px}
-        .card p{margin:0;color:var(--muted);font-size:13px;flex:1}
-        .card .thumb{flex:0 0 96px;margin-right:12px}
-        .card .thumb img{width:96px;height:96px;object-fit:contain;border-radius:8px;background:rgba(0,0,0,0.06);padding:8px;}
-    .tag{display:inline-block;padding:6px 8px;border-radius:999px;font-size:12px;background:rgba(0,0,0,0.25);color:var(--muted);margin-top:10px}
-
-        /* responsive: stack cards on narrow screens */
-        @media (max-width:880px){
-          .games{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));}
-          .card{flex-direction:column;align-items:stretch}
-          .card .thumb{margin-right:0;margin-bottom:10px;flex:0 0 auto}
-          .card .thumb img{width:100%;height:140px;max-width:100%}
-        }
-
-    /* sidebar */
-    .sideh{display:flex;justify-content:space-between;align-items:center}
-    .inprogress{margin-top:12px;display:flex;flex-direction:column;gap:8px}
-    .progress-item{display:flex;justify-content:space-between;gap:8px;padding:10px;border-radius:8px;background:var(--glass-2);border:1px solid rgba(255,255,255,0.02)}
-
-    footer{margin-top:30px;text-align:center;color:var(--muted);font-size:13px}
-
-    /* modal */
-    .modal{position:fixed;inset:0;background:rgba(2,4,8,0.84);display:flex;align-items:center;justify-content:center;padding:28px;z-index:60;opacity:0;pointer-events:none;transition:opacity .18s}
-    .modal.open{opacity:1;pointer-events:auto}
-    .modal video{max-width:100%;max-height:88vh;border-radius:10px;box-shadow:0 24px 80px rgba(0,0,0,0.8)}
-    .close-x{position:absolute;top:20px;right:24px;color:var(--muted);background:transparent;border:0;font-size:22px;cursor:pointer}
-
-    /* responsive */
-    @media (max-width:880px){main{grid-template-columns:1fr} .wrap{padding:18px}}
+    /* Hide scrollbar for cleaner look if content overflows */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9; 
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1; 
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8; 
+    }
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <header>
-      <div>
-        <div class="logo">KrrishyBoy studios</div>
-        <div class="subtitle">Indie game studio — made with passion</div>
+<body class="bg-pattern min-h-screen flex flex-col relative">
+
+  <div id="introOverlay" class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center transition-opacity duration-500">
+    <!-- Bright placeholder background for intro video -->
+    <div class="absolute inset-0 bg-sky-100 z-0"></div>
+    <video id="introVideo" src="KrrishyBoy studios intro.mp4" autoplay muted playsinline class="absolute inset-0 w-full h-full object-cover z-10 opacity-70"></video>
+    
+    <div class="relative z-20 text-center flex flex-col items-center">
+      <h1 class="text-5xl font-extrabold text-sky-600 mb-4 drop-shadow-md tracking-tight">KrrishyBoy Studios</h1>
+      <p class="text-lg text-slate-600 font-semibold bg-white/80 px-4 py-1 rounded-full backdrop-blur-sm">Loading awesomeness...</p>
+    </div>
+
+    <button id="skipIntro" class="absolute top-6 right-6 z-30 px-6 py-2 bg-white/90 hover:bg-white text-sky-600 font-bold rounded-full shadow-lg border border-sky-100 transition transform hover:scale-105 backdrop-blur-sm">
+      Skip Intro ➡
+    </button>
+  </div>
+
+  <header class="w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 transition-colors duration-300">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <!-- Cute placeholder logo icon -->
+        <div class="w-10 h-10 bg-gradient-to-br from-sky-400 to-indigo-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-md transform -rotate-6">
+          K
+        </div>
+        <div>
+          <h1 class="text-2xl font-extrabold text-slate-800 dark:text-white tracking-tight leading-none">KrrishyBoy Studios</h1>
+          <p class="text-sm text-sky-600 dark:text-sky-400 font-semibold">Made with passion 💖</p>
+        </div>
       </div>
-      <div style="margin-left:auto;color:var(--muted);font-size:13px">Signature: "Made by KrrishyBoy studios"</div>
-    </header>
+      
+      <!-- Theme Toggle Button -->
+      <button id="themeToggle" class="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-sky-100 dark:hover:bg-slate-700 transition-colors shadow-sm border border-slate-200 dark:border-slate-700" aria-label="Toggle Dark Mode">
+        <!-- Sun Icon (shows in dark mode) -->
+        <svg id="sunIcon" class="hidden w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        <!-- Moon Icon (shows in light mode) -->
+        <svg id="moonIcon" class="block w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+      </button>
+    </div>
+  </header>
 
-    <section class="hero panel">
-      <!-- Background video (will be loaded after intro) -->
-      <video class="bg-video" muted loop playsinline preload="auto" data-src="KrrishyBoy studios intro.mp4" aria-hidden="true"></video>
-
-      <div class="overlay">
-        <h1>Welcome to <span class="neon">KrrishyBoy studios</span></h1>
-        <p>Futuristic, dark aesthetic. Games portfolio, demos and work-in-progress tracker.</p>
-
-        <div class="controls">
-          <input id="search" placeholder="Search games..." style="margin-left:auto;padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:#eaf6ff" />
+  <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-8">
+    
+    <!-- Hero Section with Background Video -->
+    <section class="relative w-full rounded-3xl overflow-hidden bg-slate-800 shadow-xl min-h-[350px] flex flex-col justify-center border-4 border-white">
+      <!-- Fallback color if video doesn't load -->
+      <div class="absolute inset-0 bg-gradient-to-r from-sky-300 to-indigo-300"></div>
+      <video class="bg-video absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-50" muted loop playsinline preload="auto" data-src="KrrishyBoy studios intro.mp4" aria-hidden="true"></video>
+      
+      <div class="relative z-10 px-8 py-12 md:px-12 md:py-16 max-w-3xl">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
+          Welcome to <span class="text-yellow-300">KrrishyBoy Studios</span>
+        </h2>
+        <p class="text-lg md:text-xl text-white/90 font-medium mb-8 drop-shadow-md max-w-xl">
+          We make fun, fast-paced, and highly addictive indie games. Check out our portfolio and see what's cooking!
+        </p>
+        
+        <!-- Search Bar -->
+        <div class="relative max-w-md">
+          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <input id="search" type="text" placeholder="Search for a game..." class="w-full pl-11 pr-4 py-3 rounded-full border-2 border-transparent bg-white dark:bg-slate-800 dark:text-white shadow-lg focus:outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-100 dark:focus:ring-sky-900 transition-all font-medium text-slate-700 placeholder-slate-400 dark:placeholder-slate-500">
         </div>
       </div>
     </section>
 
-    <main>
-      <section class="panel">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <h2 style="margin:0">Games</h2>
-          <div style="color:var(--muted);font-size:13px">Total: <span id="count">0</span></div>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      
+      <!-- Games Grid (Takes up 3/4 on large screens) -->
+      <section class="lg:col-span-3">
+        <div class="flex justify-between items-end mb-6 px-2">
+          <h2 class="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+            🎮 Our Games
+          </h2>
+          <span class="text-sm font-semibold bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-sm text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+            Total: <span id="count" class="text-sky-600 dark:text-sky-400">0</span>
+          </span>
         </div>
 
-        <div class="games" id="gamesGrid">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="gamesGrid">
           <!-- JS will populate cards here -->
         </div>
-
       </section>
 
-      <aside class="panel">
-        <div class="sideh">
-          <h3 style="margin:0">In Progress</h3>
+      <!-- Sidebar for In Progress (Takes up 1/4 on large screens) -->
+      <aside class="lg:col-span-1">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 sticky top-28 transition-colors duration-300">
+          <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
+            🚀 In Progress
+          </h3>
+          <div class="flex flex-col gap-4" id="inProgressList">
+            <!-- JS populates -->
+          </div>
         </div>
-        <div class="inprogress" id="inProgressList">
-          <!-- JS populates -->
-        </div>
-
       </aside>
-    </main>
+    </div>
+  </main>
 
-    <footer>
-      <div>© <span id="year"></span> KrrishyBoy studios — All rights reserved.</div>
-    </footer>
-  </div>
-
-  <!-- Intro overlay: plays once before revealing site -->
-  <div id="introOverlay" style="position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;">
-    <video id="introVideo" src="KrrishyBoy studios intro.mp4" autoplay muted playsinline style="width:100%;height:100%;object-fit:cover;"></video>
-    <button id="skipIntro" style="position:absolute;top:18px;right:18px;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.06);color:#eaf6ff;border:1px solid rgba(255,255,255,0.06);cursor:pointer;">Skip</button>
-  </div>
+  <footer class="w-full text-center py-8 text-slate-500 text-sm font-medium mt-auto">
+    <div>© <span id="year"></span> KrrishyBoy Studios — Built with fun. All rights reserved.</div>
+  </footer>
 
   <script>
-    // Editable data: replace placeholders with your own game URLs, thumbnails, and descriptions.
+    // Editable data: Game portfolio
     const games = [
-      {title:'Riel runner', desc:'Riel Runner is a local single-player HTML/JS arcade action game with pixel-art visuals, 100 progressively harder levels, and 10 boss encounters. Players run through corridors, shoot enemies, collect riels, and upgrade between levels in a simple shop system — no online services required. Fast-paced, nostalgic controls and short levels make it great for quick play sessions.', href:'https://riel-runner.github.io', tags:['Arcade'], thumb:'Riel runner ThumbThack.png'},
-      {title:'Riel runner online(Beta)', desc:'Riel Runner Online (beta) turns the arcade into lightweight realtime co-op: players create or join a room with a short code and play synchronized sessions together while sharing level/shop state. It uses Firebase Realtime Database with anonymous auth to sync presence and inputs (no usernames or chat to avoid privacy issues). The prototype favors responsiveness via client-side prediction and simple sync so matches start quickly with minimal friction.', href:'https://riel-runner.github.io/Riel-runner-online/', tags:['Arcade','Multiplayer'], thumb:'Riel runner ThumbThack.png'},
-      {title:'tic tac toe', desc:"Challenge your friends or test your skills against the computer in this classic game of Tic Tac Toe! Choose between local two-player mode or a bot opponent, and see who can get three in a row first. With simple controls and quick matches, it's easy to jump in and play anytime", href:'https://kb-tictactoe.github.io', tags:['local co-op'], thumb:'tictactoe ThumbThack.png'}
-
+      {
+        title: 'Riel Runner', 
+        desc: 'A local single-player HTML/JS arcade action game with pixel-art visuals, 100 progressively harder levels, and 10 boss encounters. Run, shoot, collect riels, and upgrade in the shop!', 
+        href: 'https://riel-runner.github.io', 
+        tags: ['Arcade', 'Singleplayer'], 
+        thumb: 'Riel runner ThumbThack.png',
+        color: 'bg-emerald-100 text-emerald-700'
+      },
+      {
+        title: 'Riel Runner Online (Beta)', 
+        desc: 'Turns the arcade into lightweight realtime co-op! Create or join a room with a short code and play synchronized sessions together while sharing level/shop state. Fast matchmaking, pure fun.', 
+        href: 'https://riel-runner.github.io/Riel-runner-online/', 
+        tags: ['Arcade', 'Multiplayer', 'Co-op'], 
+        thumb: 'Riel runner ThumbThack.png',
+        color: 'bg-blue-100 text-blue-700'
+      },
+      {
+        title: 'Tic Tac Toe', 
+        desc: "Challenge your friends or test your skills against the computer in this classic game of Tic Tac Toe! Local two-player mode or bot opponent. Simple controls and quick matches.", 
+        href: 'https://kb-tictactoe.github.io', 
+        tags: ['Local Co-op', 'Classic'], 
+        thumb: 'tictactoe ThumbThack.png',
+        color: 'bg-purple-100 text-purple-700'
+      }
     ];
+
     const inProgress = [
-      {title:'Project TD', progress:'Tower defense'},
-      {title:'Hyper-speedrun', progress:'coming 2027 june'}
+      {title: 'Project TD', progress: 'Tower Defense • Alpha Phase', icon: '🏰'},
+      {title: 'Hyper-speedrun', progress: 'Coming June 2027', icon: '⚡'}
     ];
 
     const grid = document.getElementById('gamesGrid');
     const count = document.getElementById('count');
     const ipList = document.getElementById('inProgressList');
 
-    function renderGames(filter=''){
-      grid.innerHTML='';
-      const f = filter.trim().toLowerCase();
-      let shown=0;
-      games.forEach(g=>{
-        if(f && !(g.title+g.desc+(g.tags||[]).join(' ')).toLowerCase().includes(f)) return;
-        shown++;
-        const el = document.createElement('article'); el.className='card';
-        const thumbHtml = g.thumb ? `<div class="thumb"><img src="${g.thumb}" alt="${escapeHtml(g.title)} thumbnail"/></div>` : '';
-        el.innerHTML = `${thumbHtml}<div class="content"><h3>${escapeHtml(g.title)}</h3><p>${escapeHtml(g.desc)}</p><div class="card-footer" style="margin-top:auto;display:flex;justify-content:space-between;align-items:center"><div class="tag">${(g.tags||[]).slice(0,2).join(' • ')}</div><a class="btn secondary" href="${g.href}" target="_blank">Open</a></div></div>`;
-        grid.appendChild(el);
-      });
-      count.textContent = shown;
-      if(shown===0) grid.innerHTML='<div style="color:var(--muted);padding:18px">No games match your search.</div>';
+    // Escape HTML to prevent XSS
+    function escapeHtml(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
-    function renderProgress(){
-      ipList.innerHTML='';
-      inProgress.forEach(p=>{
-        const d = document.createElement('div'); d.className='progress-item';
-        d.innerHTML=`<div style="font-weight:700">${escapeHtml(p.title)}</div><div style="color:var(--muted)">${escapeHtml(p.progress)}</div>`;
+    function renderGames(filter = '') {
+      grid.innerHTML = '';
+      const f = filter.trim().toLowerCase();
+      let shown = 0;
+      
+      games.forEach(g => {
+        if (f && !(g.title + g.desc + (g.tags || []).join(' ')).toLowerCase().includes(f)) return;
+        shown++;
+        
+        const el = document.createElement('article');
+        el.className = 'game-card flex flex-col bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden group transition-colors duration-300';
+        
+        // Generate tags HTML with a default color if none provided
+        const tagColor = g.color || 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300';
+        const tagsHtml = (g.tags || []).slice(0, 3).map(tag => 
+          `<span class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${tagColor} mr-2 mb-2 inline-block">${escapeHtml(tag)}</span>`
+        ).join('');
+
+        // Thumbnail with fallback placeholder logic via standard image attributes
+        const imgUrl = g.thumb ? g.thumb : `https://placehold.co/400x300/e2e8f0/64748b?text=${encodeURIComponent(g.title)}`;
+        
+        el.innerHTML = `
+          <div class="h-48 w-full bg-slate-100 dark:bg-slate-700 relative overflow-hidden flex-shrink-0">
+            <img src="${imgUrl}" alt="${escapeHtml(g.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/400x300/e2e8f0/64748b?text=Game+Image';">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+          </div>
+          <div class="p-5 flex flex-col flex-grow">
+            <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2 leading-tight">${escapeHtml(g.title)}</h3>
+            <div class="flex-wrap mb-3">${tagsHtml}</div>
+            <p class="text-slate-600 dark:text-slate-300 text-sm mb-6 flex-grow line-clamp-3">${escapeHtml(g.desc)}</p>
+            
+            <div class="mt-auto">
+              <a href="${g.href}" target="_blank" class="block w-full text-center py-2.5 px-4 bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 hover:bg-sky-500 hover:dark:bg-sky-500 hover:text-white font-bold rounded-xl transition duration-200 shadow-sm">
+                Play Game 🕹️
+              </a>
+            </div>
+          </div>
+        `;
+        grid.appendChild(el);
+      });
+      
+      count.textContent = shown;
+      
+      if (shown === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-12 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 bg-white dark:bg-slate-800 rounded-2xl border border-dashed border-slate-300 dark:border-slate-600">
+            <span class="text-4xl mb-3">🧐</span>
+            <p class="font-medium">No games match your search.</p>
+          </div>`;
+      }
+    }
+
+    function renderProgress() {
+      ipList.innerHTML = '';
+      inProgress.forEach(p => {
+        const d = document.createElement('div');
+        d.className = 'flex items-center gap-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-100 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition cursor-default';
+        d.innerHTML = `
+          <div class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-xl flex-shrink-0">
+            ${p.icon || '🛠️'}
+          </div>
+          <div>
+            <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">${escapeHtml(p.title)}</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">${escapeHtml(p.progress)}</div>
+          </div>
+        `;
         ipList.appendChild(d);
       });
     }
 
-    function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const sunIcon = document.getElementById('sunIcon');
+    const moonIcon = document.getElementById('moonIcon');
 
-    // wire up search
-    document.getElementById('search').addEventListener('input', (e)=> renderGames(e.target.value));
-    // intro overlay: play intro video, then reveal site
+    // Check system preference on load
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+      sunIcon.classList.remove('hidden');
+      moonIcon.classList.add('hidden');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      if (document.documentElement.classList.contains('dark')) {
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+      } else {
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+      }
+    });
+
+    // Wire up search functionality
+    document.getElementById('search').addEventListener('input', (e) => renderGames(e.target.value));
+
+    // Intro Overlay Logic
     const introOverlay = document.getElementById('introOverlay');
     const introVideo = document.getElementById('introVideo');
     const bgVideo = document.querySelector('.bg-video');
-    function revealSite(){
-      if(!introOverlay) return;
-      introOverlay.style.transition = 'opacity 400ms ease';
+    
+    function revealSite() {
+      if (!introOverlay) return;
       introOverlay.style.opacity = '0';
-      setTimeout(()=>{ introOverlay.parentNode && introOverlay.parentNode.removeChild(introOverlay); }, 500);
-      // load background video after intro to avoid duplicate playback during intro
-      if(bgVideo && bgVideo.dataset && bgVideo.dataset.src){
+      setTimeout(() => { 
+        if (introOverlay.parentNode) {
+          introOverlay.parentNode.removeChild(introOverlay); 
+        }
+      }, 500);
+      
+      // Load background video after intro to avoid duplicate playback
+      if (bgVideo && bgVideo.dataset && bgVideo.dataset.src) {
         bgVideo.src = bgVideo.dataset.src;
-        bgVideo.play().catch(()=>{});
+        bgVideo.play().catch(() => {
+          console.log("Autoplay prevented by browser. User interaction needed.");
+        });
       }
     }
-    introVideo.addEventListener('ended', ()=> revealSite());
-    document.getElementById('skipIntro').addEventListener('click', ()=>{ introVideo.pause(); revealSite(); });
 
-    // initial render
-    renderGames(); renderProgress(); document.getElementById('year').textContent = new Date().getFullYear();
+    // Handle intro video events (if the file exists, it will play and end. If not, error fires).
+    introVideo.addEventListener('ended', revealSite);
+    introVideo.addEventListener('error', revealSite); // Failsafe if video is missing locally
+    document.getElementById('skipIntro').addEventListener('click', () => { 
+      introVideo.pause(); 
+      revealSite(); 
+    });
 
-    // helpful note in console
-    console.log('KrrishyBoy studios site loaded. Edit the "games" and "inProgress" arrays in the HTML to change content.');
+    // Timeout failsafe: Force skip after 8 seconds just in case video hangs
+    setTimeout(revealSite, 8000);
+
+    // Initial Render on Page Load
+    renderGames(); 
+    renderProgress(); 
+    document.getElementById('year').textContent = new Date().getFullYear();
+
   </script>
 </body>
 </html>
