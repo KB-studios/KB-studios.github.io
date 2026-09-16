@@ -229,13 +229,13 @@
           `<span class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${tagColor} mr-2 mb-2 inline-block">${escapeHtml(tag)}</span>`
         ).join('');
 
-        // Thumbnail with fallback placeholder logic via standard image attributes
-        const imgUrl = g.thumb ? g.thumb : `https://placehold.co/400x300/e2e8f0/64748b?text=${encodeURIComponent(g.title)}`;
+        // Thumbnail with fallback placeholder logic modified for square aspect ratios
+        const imgUrl = g.thumb ? g.thumb : `https://placehold.co/400x400/e2e8f0/64748b?text=${encodeURIComponent(g.title)}`;
         
         el.innerHTML = `
-          <div class="h-48 w-full bg-slate-100 dark:bg-slate-700 relative overflow-hidden flex-shrink-0">
-            <img src="${imgUrl}" alt="${escapeHtml(g.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/400x300/e2e8f0/64748b?text=Game+Image';">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+          <div class="aspect-square w-full bg-slate-100 dark:bg-slate-700/50 relative overflow-hidden flex-shrink-0 border-b border-slate-100 dark:border-slate-700">
+            <img src="${imgUrl}" alt="${escapeHtml(g.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/400x400/e2e8f0/64748b?text=Game+Image';">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 pointer-events-none"></div>
           </div>
           <div class="p-5 flex flex-col flex-grow">
             <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2 leading-tight">${escapeHtml(g.title)}</h3>
